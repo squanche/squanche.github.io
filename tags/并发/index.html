@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="hashMap," />
+  <meta name="keywords" content="Hexo, NexT" />
 
 
 
@@ -83,16 +83,13 @@
 
 
 
-<meta name="description" content="HashMap概念   名称 说明     length Table数组的长度   size 成功通过 put 方法添加到HashMap 中的所有元素的个数   hashCode object.hashCode()返回的值，尽可能离散均匀分布   Hash Object.HashCode()与当前集合的 table.Length(进行位运算的结果，以确定哈希糟位置    Jdk1.7扩容的时候re">
-<meta property="og:type" content="article">
-<meta property="og:title" content="hashMap">
-<meta property="og:url" content="http://yoursite.com/2020/06/05/hashMap/index.html">
+<meta name="description" content="学而时习之">
+<meta property="og:type" content="website">
+<meta property="og:title" content="squanche&#39;s Blog">
+<meta property="og:url" content="http://yoursite.com/tags/%E5%B9%B6%E5%8F%91/index.html">
 <meta property="og:site_name" content="squanche&#39;s Blog">
-<meta property="og:description" content="HashMap概念   名称 说明     length Table数组的长度   size 成功通过 put 方法添加到HashMap 中的所有元素的个数   hashCode object.hashCode()返回的值，尽可能离散均匀分布   Hash Object.HashCode()与当前集合的 table.Length(进行位运算的结果，以确定哈希糟位置    Jdk1.7扩容的时候re">
-<meta property="article:published_time" content="2020-06-05T03:42:49.000Z">
-<meta property="article:modified_time" content="2020-06-05T04:35:44.423Z">
+<meta property="og:description" content="学而时习之">
 <meta property="article:author" content="yzc">
-<meta property="article:tag" content="hashMap">
 <meta name="twitter:card" content="summary">
 
 
@@ -123,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2020/06/05/hashMap/"/>
+  <link rel="canonical" href="http://yoursite.com/tags/并发/"/>
 
 
 
 
 
-  <title>hashMap | squanche's Blog</title>
+  <title>标签: 并发 | squanche's Blog</title>
   
 
 
@@ -148,7 +145,7 @@
     
   
 
-  <div class="container sidebar-position-left page-post-detail">
+  <div class="container sidebar-position-left ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -252,209 +249,54 @@
           <div id="content" class="content">
             
 
-  <div id="posts" class="posts-expand">
-    
+  
+  
+  
+  <div class="post-block tag">
 
-  
+    <div id="posts" class="posts-collapse">
+      <div class="collection-title">
+        <h1>并发<small>标签</small>
+        </h1>
+      </div>
 
-  
-  
-  
+      
+        
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/06/05/hashMap/">
+    <header class="post-header">
 
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="yzc">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="squanche's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
+      <h2 class="post-title">
         
+            <a class="post-title-link" href="/2020/06/05/%E5%B9%B6%E5%8F%91%E4%B8%8E%E5%A4%9A%E7%BA%BF%E7%A8%8B/" itemprop="url">
+              
+                <span itemprop="name">并发与多线程</span>
+              
+            </a>
         
-          <h1 class="post-title" itemprop="name headline">hashMap</h1>
-        
+      </h2>
 
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-06-05T11:42:49+08:00">
-                2020-06-05
-              </time>
-            
+      <div class="post-meta">
+        <time class="post-time" itemprop="dateCreated"
+              datetime="2020-06-05T14:32:05+08:00"
+              content="2020-06-05" >
+          06-05
+        </time>
+      </div>
 
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/java/" itemprop="url" rel="index">
-                    <span itemprop="name">java</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        <h4 id="HashMap"><a href="#HashMap" class="headerlink" title="HashMap"></a>HashMap</h4><h5 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h5><table>
-<thead>
-<tr>
-<th>名称</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>length</td>
-<td>Table数组的长度</td>
-</tr>
-<tr>
-<td>size</td>
-<td>成功通过 put 方法添加到HashMap 中的所有元素的个数</td>
-</tr>
-<tr>
-<td>hashCode</td>
-<td>object.hashCode()返回的值，尽可能离散均匀分布</td>
-</tr>
-<tr>
-<td>Hash</td>
-<td>Object.HashCode()与当前集合的 table.Length(进行位运算的结果，以确定哈希糟位置</td>
-</tr>
-</tbody>
-</table>
-<p>Jdk1.7扩容的时候resize()使用的是<strong><em>头插法</em></strong></p>
-<h5 id="hashMap对象丢失的原因有以下几点"><a href="#hashMap对象丢失的原因有以下几点" class="headerlink" title="hashMap对象丢失的原因有以下几点"></a>hashMap对象丢失的原因有以下几点</h5><ol>
-<li><p>并发赋值时被覆盖</p>
-</li>
-<li><p>己遍历区间新增元素会丢失。</p>
-</li>
-<li><p>“新表”被覆盖。</p>
-</li>
-<li><p>迁移丢失。在迁移过程中,有并发时,next 被提前 null</p>
-</li>
-</ol>
-
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-        <div class="post-tags">
-          
-            <a href="/tags/hashMap/" rel="tag"># hashMap</a>
-          
-        </div>
-      
-
-      
-      
-      
-
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-              <a href="/2020/06/05/fast-fail/" rel="next" title="fast-fail">
-                <i class="fa fa-chevron-left"></i> fast-fail
-              </a>
-            
-          </div>
-
-          <span class="post-nav-divider"></span>
-
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2020/06/05/tree/" rel="prev" title="tree">
-                tree <i class="fa fa-chevron-right"></i>
-              </a>
-            
-          </div>
-        </div>
-      
-
-      
-      
-    </footer>
-  </div>
-  
-  
-  
+    </header>
   </article>
 
 
-
-    <div class="post-spread">
       
     </div>
+
   </div>
+  
+  
+  
+
+  
 
 
           </div>
@@ -462,10 +304,6 @@
 
 
           
-
-  
-
-
 
         </div>
         
@@ -486,17 +324,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            站点概览
-          </li>
-        </ul>
-      
 
-      <section class="site-overview-wrap sidebar-panel">
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -573,22 +402,6 @@
         </div>
       </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#HashMap"><span class="nav-number">1.</span> <span class="nav-text">HashMap</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#概念"><span class="nav-number">1.1.</span> <span class="nav-text">概念</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#hashMap对象丢失的原因有以下几点"><span class="nav-number">1.2.</span> <span class="nav-text">hashMap对象丢失的原因有以下几点</span></a></li></ol></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
       
 
       
@@ -729,10 +542,6 @@
 
 
   
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
-
-
 
   
 
