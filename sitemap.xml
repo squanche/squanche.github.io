@@ -2,6 +2,20 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://yoursite.com/2020/06/05/tree/</loc>
+    
+    <lastmod>2020-06-05T03:43:40.468Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/2020/06/05/hashMap/</loc>
+    
+    <lastmod>2020-06-05T03:43:00.888Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://yoursite.com/2020/06/05/fast-fail/</loc>
     
     <lastmod>2020-06-05T03:36:41.344Z</lastmod>
