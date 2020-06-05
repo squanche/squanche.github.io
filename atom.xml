@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2020-06-05T07:03:36.763Z</updated>
+  <updated>2020-06-05T08:03:48.549Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -21,9 +21,9 @@
     <link href="http://yoursite.com/2020/06/05/%E5%B9%B6%E5%8F%91%E4%B8%8E%E5%A4%9A%E7%BA%BF%E7%A8%8B/"/>
     <id>http://yoursite.com/2020/06/05/并发与多线程/</id>
     <published>2020-06-05T06:32:05.000Z</published>
-    <updated>2020-06-05T07:03:36.763Z</updated>
+    <updated>2020-06-05T08:03:48.549Z</updated>
     
-    <content type="html"><![CDATA[<h4 id="并发与并行"><a href="#并发与并行" class="headerlink" title="并发与并行"></a>并发与并行</h4><p>什么时<strong><em>并发（Concurrency）</em></strong>和<strong><em>并行（Parallelism）</em></strong>？</p><p>简单来说以 KTV 唱歌为例，并行指的是有多少人可以使用话筒同时唱歌，并发指的是同一个话筒被多个人轮流使用。</p><h5 id="1-并发"><a href="#1-并发" class="headerlink" title="1. 并发"></a>1. 并发</h5><p>是指在某个时间段内，多任务交替处理的能力。如同单核cpu要执行多个任务，cpu把执行时间切分成多个时间片用于不同的进程执行。由于cpu执行速度很快，所以对于用户来说，感觉是是同时多个进程同时在执行。</p><ol><li><p>并发挥序之间有互相制约的关系。 直接制约体现为一个程序需要另一个程序的计算结果，间接制约体现为多个程序竞争共享资源，如处理器、缓冲区等。</p></li><li><p>并发程序的执行过程是断断续续的。 程序需要记忆现场指令及执行点。</p></li><li><p>当并发数合理并且CPU拥有足够的处理能力句，并发会提高程序的运行效率。</p></li></ol><h5 id="2-并行"><a href="#2-并行" class="headerlink" title="2. 并行"></a>2. 并行</h5><p>并行是指同时处理多任务的能力。目前， CPU 已经发展为多核，可以同时执行多个互不依赖的指令及执行块。</p><h4 id="线程和进程"><a href="#线程和进程" class="headerlink" title="线程和进程"></a>线程和进程</h4><h5 id="1-进程"><a href="#1-进程" class="headerlink" title="1. 进程"></a>1. 进程</h5><p>进程（Process）是计算机中的程序关于某数据集合上的一次运行活动，是系统进行资源分配和调度的基本单位，是操作系统结构的基础。在早期面向进程设计的计算机结构中，进程是程序的基本执行实体；在当代面向线程设计的计算机结构中，进程是线程的容器。程序是指令、数据及其组织形式的描述，进程是程序的实体</p><h5 id="2-线程"><a href="#2-线程" class="headerlink" title="2. 线程"></a>2. 线程</h5><p><strong>线程</strong>（英语：thread）是操作系统能够进行运算调度的最小单位。它被包含在进程之中，是进程中的实际运作单位。一条线程指的是进程中一个单一顺序的控制流，一个进程中可以并发多个线程，每条线程并行执行不同的任务。在Unix System V及SunOS中也被称为轻量进程（lightweight processes），但轻量进程更多指内核线程（kernel thread），而把用户线程（user thread）称为线程。</p><p>例如，楼下有一车砖头需要工人搬到 21 楼，如果 10 个人一起搬，速度 定比1个人搬要快，完成任务的总时间会极大减少。但是论单次的时间成本，由于楼梯交会等因素 10 个人比 个人要慢。如果无限地增加入数，比如10000 人参与搬砖时，反而会因为楼道拥墙不堪变得更慢，所以合适的人数才会使工作效率最大化。同理，合适的线程数才能让 CPU 资源被充分利用</p><p><img src="/Users/yangzhichao/Library/Application Support/typora-user-images/image-20200605145830777.png" alt="image-20200605145830777"></p>]]></content>
+    <content type="html"><![CDATA[<h4 id="并发与并行"><a href="#并发与并行" class="headerlink" title="并发与并行"></a>并发与并行</h4><p>什么时<strong><em>并发（Concurrency）</em></strong>和<strong><em>并行（Parallelism）</em></strong>？</p><p>简单来说以 KTV 唱歌为例，并行指的是有多少人可以使用话筒同时唱歌，并发指的是同一个话筒被多个人轮流使用。</p><h5 id="1-并发"><a href="#1-并发" class="headerlink" title="1. 并发"></a>1. 并发</h5><p>是指在某个时间段内，多任务交替处理的能力。如同单核cpu要执行多个任务，cpu把执行时间切分成多个时间片用于不同的进程执行。由于cpu执行速度很快，所以对于用户来说，感觉是是同时多个进程同时在执行。</p><ol><li><p>并发挥序之间有互相制约的关系。 直接制约体现为一个程序需要另一个程序的计算结果，间接制约体现为多个程序竞争共享资源，如处理器、缓冲区等。</p></li><li><p>并发程序的执行过程是断断续续的。 程序需要记忆现场指令及执行点。</p></li><li><p>当并发数合理并且CPU拥有足够的处理能力句，并发会提高程序的运行效率。</p></li></ol><h5 id="2-并行"><a href="#2-并行" class="headerlink" title="2. 并行"></a>2. 并行</h5><p>并行是指同时处理多任务的能力。目前， CPU 已经发展为多核，可以同时执行多个互不依赖的指令及执行块。</p><h4 id="线程和进程"><a href="#线程和进程" class="headerlink" title="线程和进程"></a>线程和进程</h4><h5 id="1-进程"><a href="#1-进程" class="headerlink" title="1. 进程"></a>1. 进程</h5><p>进程（Process）是计算机中的程序关于某数据集合上的一次运行活动，是系统进行资源分配和调度的基本单位，是操作系统结构的基础。在早期面向进程设计的计算机结构中，进程是程序的基本执行实体；在当代面向线程设计的计算机结构中，进程是线程的容器。程序是指令、数据及其组织形式的描述，进程是程序的实体</p><h5 id="2-线程"><a href="#2-线程" class="headerlink" title="2. 线程"></a>2. 线程</h5><p><strong>线程</strong>（英语：thread）是操作系统能够进行运算调度的最小单位。它被包含在进程之中，是进程中的实际运作单位。一条线程指的是进程中一个单一顺序的控制流，一个进程中可以并发多个线程，每条线程并行执行不同的任务。在Unix System V及SunOS中也被称为轻量进程（lightweight processes），但轻量进程更多指内核线程（kernel thread），而把用户线程（user thread）称为线程。</p><p>例如，楼下有一车砖头需要工人搬到 21 楼，如果 10 个人一起搬，速度 定比1个人搬要快，完成任务的总时间会极大减少。但是论单次的时间成本，由于楼梯交会等因素 10 个人比 个人要慢。如果无限地增加入数，比如10000 人参与搬砖时，反而会因为楼道拥墙不堪变得更慢，所以合适的人数才会使工作效率最大化。同理，合适的线程数才能让 CPU 资源被充分利用</p><p><img src="../images/image-20200605145830777.png" alt="image-20200605145830777"></p><h5 id="线程的状态"><a href="#线程的状态" class="headerlink" title="线程的状态"></a>线程的状态</h5>]]></content>
     
     <summary type="html">
     
