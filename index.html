@@ -265,7 +265,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/06/05/%E6%88%91%E7%9A%84%E5%8D%9A%E5%AE%A2%E6%B5%8B%E8%AF%95/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/06/05/fast-fail/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="yzc">
@@ -284,7 +284,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2020/06/05/%E6%88%91%E7%9A%84%E5%8D%9A%E5%AE%A2%E6%B5%8B%E8%AF%95/" itemprop="url">我的博客测试</a></h1>
+                <a class="post-title-link" href="/2020/06/05/fast-fail/" itemprop="url">fast-fail</a></h1>
         
 
         <div class="post-meta">
@@ -336,7 +336,23 @@
       
         
           
-            
+            <h2 id="fast-fail"><a href="#fast-fail" class="headerlink" title="fast-fail"></a>fast-fail</h2><h4 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h4><ol>
+<li><p>java.util.collection的集合都是fast-fail机制，java.util.concurrent下的则是fast-safe机制</p>
+</li>
+<li><p>collection触发fast-fail的场景就是多线程情况下，当一个线程A正在遍历集合，另外一个线程B修改、删除、或者变更该集合中的元素，导致正在遍历的线程A抛出ConcurrentModificationException异常。</p>
+</li>
+<li><p>A线程在创建便利起iterator是会copy一份modCount的值给内部的变量expectedModCount，每次hasnext的时候去比较modCount的值和expectedModCount的值是否一致，不一致说明modCount++了，因为其他线程对该集合元素进行了操作。当前线程遍历则会报错</p>
+</li>
+</ol>
+<h4 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h4><ol>
+<li>使用iterator加锁遍历</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Iterator&lt;String&gt; iterator= list.iterator(); </span><br><span class="line"><span class="keyword">while</span> (iterator.hasNext()) &#123; </span><br><span class="line">sychonized（对象）｛</span><br><span class="line">String item= iterator.next(); </span><br><span class="line"><span class="keyword">if</span> （删除元素的条件） &#123; </span><br><span class="line">iterator.remove();&#125;&#125;&#125;</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>使用COW</li>
+</ol>
+<p>使用java.util.concurrent并发包下的<strong><em>copyOnWrite</em></strong>的集合。</p>
+
           
         
       
