@@ -2,6 +2,20 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://yoursite.com/2020/06/05/%25E6%2588%2591%25E7%259A%2584%25E5%258D%259A%25E5%25AE%25A2%25E6%25B5%258B%25E8%25AF%2595/</loc>
+    
+    <lastmod>2020-06-05T02:43:42.095Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/tags/index.html</loc>
+    
+    <lastmod>2020-06-05T02:35:27.468Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://yoursite.com/2020/06/05/hello-world/</loc>
     
     <lastmod>2020-06-05T02:08:17.262Z</lastmod>
