@@ -43,7 +43,7 @@
     <link href="http://yoursite.com/2020/06/05/hashMap/"/>
     <id>http://yoursite.com/2020/06/05/hashMap/</id>
     <published>2020-06-05T03:42:49.000Z</published>
-    <updated>2020-06-05T03:43:00.888Z</updated>
+    <updated>2020-06-05T04:35:44.423Z</updated>
     
     <content type="html"><![CDATA[<h4 id="HashMap"><a href="#HashMap" class="headerlink" title="HashMap"></a>HashMap</h4><h5 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h5><table><thead><tr><th>名称</th><th>说明</th></tr></thead><tbody><tr><td>length</td><td>Table数组的长度</td></tr><tr><td>size</td><td>成功通过 put 方法添加到HashMap 中的所有元素的个数</td></tr><tr><td>hashCode</td><td>object.hashCode()返回的值，尽可能离散均匀分布</td></tr><tr><td>Hash</td><td>Object.HashCode()与当前集合的 table.Length(进行位运算的结果，以确定哈希糟位置</td></tr></tbody></table><p>Jdk1.7扩容的时候resize()使用的是<strong><em>头插法</em></strong></p><h5 id="hashMap对象丢失的原因有以下几点"><a href="#hashMap对象丢失的原因有以下几点" class="headerlink" title="hashMap对象丢失的原因有以下几点"></a>hashMap对象丢失的原因有以下几点</h5><ol><li><p>并发赋值时被覆盖</p></li><li><p>己遍历区间新增元素会丢失。</p></li><li><p>“新表”被覆盖。</p></li><li><p>迁移丢失。在迁移过程中,有并发时,next 被提前 null</p></li></ol>]]></content>
     
@@ -56,6 +56,10 @@
     
     </summary>
     
+      <category term="java" scheme="http://yoursite.com/categories/java/"/>
+    
+    
+      <category term="hashMap" scheme="http://yoursite.com/tags/hashMap/"/>
     
   </entry>
   

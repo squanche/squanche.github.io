@@ -83,14 +83,12 @@
 
 
 
-<meta name="description" content="fast-fail原理 java.util.collection的集合都是fast-fail机制，java.util.concurrent下的则是fast-safe机制  collection触发fast-fail的场景就是多线程情况下，当一个线程A正在遍历集合，另外一个线程B修改、删除、或者变更该集合中的元素，导致正在遍历的线程A抛出ConcurrentModificationException">
-<meta property="og:type" content="article">
-<meta property="og:title" content="fast-fail">
-<meta property="og:url" content="http://yoursite.com/2020/06/05/fast-fail/index.html">
+<meta name="description" content="学而时习之">
+<meta property="og:type" content="website">
+<meta property="og:title" content="squanche&#39;s Blog">
+<meta property="og:url" content="http://yoursite.com/tags/hashMap/index.html">
 <meta property="og:site_name" content="squanche&#39;s Blog">
-<meta property="og:description" content="fast-fail原理 java.util.collection的集合都是fast-fail机制，java.util.concurrent下的则是fast-safe机制  collection触发fast-fail的场景就是多线程情况下，当一个线程A正在遍历集合，另外一个线程B修改、删除、或者变更该集合中的元素，导致正在遍历的线程A抛出ConcurrentModificationException">
-<meta property="article:published_time" content="2020-06-05T02:42:36.000Z">
-<meta property="article:modified_time" content="2020-06-05T03:36:41.344Z">
+<meta property="og:description" content="学而时习之">
 <meta property="article:author" content="yzc">
 <meta name="twitter:card" content="summary">
 
@@ -122,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2020/06/05/fast-fail/"/>
+  <link rel="canonical" href="http://yoursite.com/tags/hashMap/"/>
 
 
 
 
 
-  <title>fast-fail | squanche's Blog</title>
+  <title>标签: hashMap | squanche's Blog</title>
   
 
 
@@ -147,7 +145,7 @@
     
   
 
-  <div class="container sidebar-position-left page-post-detail">
+  <div class="container sidebar-position-left ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -251,156 +249,54 @@
           <div id="content" class="content">
             
 
-  <div id="posts" class="posts-expand">
-    
+  
+  
+  
+  <div class="post-block tag">
 
-  
+    <div id="posts" class="posts-collapse">
+      <div class="collection-title">
+        <h1>hashMap<small>标签</small>
+        </h1>
+      </div>
 
-  
-  
-  
+      
+        
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/06/05/fast-fail/">
+    <header class="post-header">
 
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="yzc">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="squanche's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
+      <h2 class="post-title">
         
-        
-          <h1 class="post-title" itemprop="name headline">fast-fail</h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
+            <a class="post-title-link" href="/2020/06/05/hashMap/" itemprop="url">
               
-                <span class="post-meta-item-text">发表于</span>
+                <span itemprop="name">hashMap</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-06-05T10:42:36+08:00">
-                2020-06-05
-              </time>
-            
+            </a>
+        
+      </h2>
 
-            
+      <div class="post-meta">
+        <time class="post-time" itemprop="dateCreated"
+              datetime="2020-06-05T11:42:49+08:00"
+              content="2020-06-05" >
+          06-05
+        </time>
+      </div>
 
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        <h2 id="fast-fail"><a href="#fast-fail" class="headerlink" title="fast-fail"></a>fast-fail</h2><h4 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h4><ol>
-<li><p>java.util.collection的集合都是fast-fail机制，java.util.concurrent下的则是fast-safe机制</p>
-</li>
-<li><p>collection触发fast-fail的场景就是多线程情况下，当一个线程A正在遍历集合，另外一个线程B修改、删除、或者变更该集合中的元素，导致正在遍历的线程A抛出ConcurrentModificationException异常。</p>
-</li>
-<li><p>A线程在创建便利起iterator是会copy一份modCount的值给内部的变量expectedModCount，每次hasnext的时候去比较modCount的值和expectedModCount的值是否一致，不一致说明modCount++了，因为其他线程对该集合元素进行了操作。当前线程遍历则会报错</p>
-</li>
-</ol>
-<h4 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h4><ol>
-<li>使用iterator加锁遍历</li>
-</ol>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Iterator&lt;String&gt; iterator= list.iterator(); </span><br><span class="line"><span class="keyword">while</span> (iterator.hasNext()) &#123; </span><br><span class="line">sychonized（对象）｛</span><br><span class="line">String item= iterator.next(); </span><br><span class="line"><span class="keyword">if</span> （删除元素的条件） &#123; </span><br><span class="line">iterator.remove();&#125;&#125;&#125;</span><br></pre></td></tr></table></figure>
-<ol start="2">
-<li>使用COW</li>
-</ol>
-<p>使用java.util.concurrent并发包下的<strong><em>copyOnWrite</em></strong>的集合。</p>
-
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-      
-      
-
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-          </div>
-
-          <span class="post-nav-divider"></span>
-
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2020/06/05/hashMap/" rel="prev" title="hashMap">
-                hashMap <i class="fa fa-chevron-right"></i>
-              </a>
-            
-          </div>
-        </div>
-      
-
-      
-      
-    </footer>
-  </div>
-  
-  
-  
+    </header>
   </article>
 
 
-
-    <div class="post-spread">
       
     </div>
+
   </div>
+  
+  
+  
+
+  
 
 
           </div>
@@ -408,10 +304,6 @@
 
 
           
-
-  
-
-
 
         </div>
         
@@ -432,17 +324,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            站点概览
-          </li>
-        </ul>
-      
 
-      <section class="site-overview-wrap sidebar-panel">
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -519,22 +402,6 @@
         </div>
       </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#fast-fail"><span class="nav-number">1.</span> <span class="nav-text">fast-fail</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#原理"><span class="nav-number">1.0.1.</span> <span class="nav-text">原理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#解决方案"><span class="nav-number">1.0.2.</span> <span class="nav-text">解决方案</span></a></li></ol></li></ol></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
       
 
       
@@ -675,10 +542,6 @@
 
 
   
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
-
-
 
   
 
