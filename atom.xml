@@ -10,7 +10,7 @@
   <id>http://yoursite.com/</id>
   
   <author>
-    <name>yzc</name>
+    <name>squanche</name>
     
   </author>
   
@@ -39,24 +39,6 @@
     
     
       <category term="AQS,ReetrantLock" scheme="http://yoursite.com/tags/AQS-ReetrantLock/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>AbstractQueuedSynchronizer</title>
-    <link href="http://yoursite.com/2020/06/08/AbstractQueuedSynchronizer/"/>
-    <id>http://yoursite.com/2020/06/08/AbstractQueuedSynchronizer/</id>
-    <published>2020-06-08T02:06:14.000Z</published>
-    <updated>2020-06-08T02:07:26.487Z</updated>
-    
-    <summary type="html">
-    
-    </summary>
-    
-      <category term="java" scheme="http://yoursite.com/categories/java/"/>
-    
-    
-      <category term="AQS" scheme="http://yoursite.com/tags/AQS/"/>
     
   </entry>
   
