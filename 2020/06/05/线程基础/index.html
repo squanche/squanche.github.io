@@ -83,16 +83,16 @@
 
 
 
-<meta name="description" content="并发与并行什么时并发（Concurrency）和并行（Parallelism） 简单来说以 KTV 唱歌为例，并行指的是有多少人可以使用话筒同时唱歌，并发指的是同一个话筒被多个人轮流使用。 1. 并发是指在某个时间段内，多任务交替处理的能力。如同单核cpu要执行多个任务，cpu把执行时间切分成多个时间片用于不同的进程执行。由于cpu执行速度很快，所以对于用户来说，感觉是是同时多个进程同时在执行。">
+<meta name="description" content="并发与并行什么时并发（Concurrency）和并行（Parallelism） 简单来说以 KTV 唱歌为例，并行指的是有多少人可以使用话筒同时唱歌，并发指的是同一个话筒被多个人轮流使用。 并发是指在某个时间段内，多任务交替处理的能力。如同单核cpu要执行多个任务，cpu把执行时间切分成多个时间片用于不同的进程执行。由于cpu执行速度很快，所以对于用户来说，感觉是是同时多个进程同时在执行。  并发">
 <meta property="og:type" content="article">
 <meta property="og:title" content="并发与多线程">
 <meta property="og:url" content="http://yoursite.com/2020/06/05/%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80/index.html">
 <meta property="og:site_name" content="squanche&#39;s Blog">
-<meta property="og:description" content="并发与并行什么时并发（Concurrency）和并行（Parallelism） 简单来说以 KTV 唱歌为例，并行指的是有多少人可以使用话筒同时唱歌，并发指的是同一个话筒被多个人轮流使用。 1. 并发是指在某个时间段内，多任务交替处理的能力。如同单核cpu要执行多个任务，cpu把执行时间切分成多个时间片用于不同的进程执行。由于cpu执行速度很快，所以对于用户来说，感觉是是同时多个进程同时在执行。">
+<meta property="og:description" content="并发与并行什么时并发（Concurrency）和并行（Parallelism） 简单来说以 KTV 唱歌为例，并行指的是有多少人可以使用话筒同时唱歌，并发指的是同一个话筒被多个人轮流使用。 并发是指在某个时间段内，多任务交替处理的能力。如同单核cpu要执行多个任务，cpu把执行时间切分成多个时间片用于不同的进程执行。由于cpu执行速度很快，所以对于用户来说，感觉是是同时多个进程同时在执行。  并发">
 <meta property="og:image" content="http://yoursite.com/2020/06/05/images/image-20200605145830777.png">
 <meta property="og:image" content="http://yoursite.com/2020/06/05/images/1591345506326.jpg">
 <meta property="article:published_time" content="2020-06-05T06:32:05.000Z">
-<meta property="article:modified_time" content="2020-06-05T09:06:06.280Z">
+<meta property="article:modified_time" content="2020-07-20T14:36:00.188Z">
 <meta property="article:author" content="squanche">
 <meta property="article:tag" content="并发">
 <meta name="twitter:card" content="summary">
@@ -360,7 +360,7 @@
       
         <h4 id="并发与并行"><a href="#并发与并行" class="headerlink" title="并发与并行"></a>并发与并行</h4><p>什么时<strong><em>并发（Concurrency）</em></strong>和<strong><em>并行（Parallelism）</em></strong></p>
 <p>简单来说以 KTV 唱歌为例，并行指的是有多少人可以使用话筒同时唱歌，并发指的是同一个话筒被多个人轮流使用。</p>
-<h5 id="1-并发"><a href="#1-并发" class="headerlink" title="1. 并发"></a>1. 并发</h5><p>是指在某个时间段内，多任务交替处理的能力。如同单核cpu要执行多个任务，cpu把执行时间切分成多个时间片用于不同的进程执行。由于cpu执行速度很快，所以对于用户来说，感觉是是同时多个进程同时在执行。</p>
+<h5 id="并发"><a href="#并发" class="headerlink" title="并发"></a>并发</h5><p>是指在某个时间段内，多任务交替处理的能力。如同单核cpu要执行多个任务，cpu把执行时间切分成多个时间片用于不同的进程执行。由于cpu执行速度很快，所以对于用户来说，感觉是是同时多个进程同时在执行。</p>
 <ol>
 <li><p>并发挥序之间有互相制约的关系。 直接制约体现为一个程序需要另一个程序的计算结果，间接制约体现为多个程序竞争共享资源，如处理器、缓冲区等。</p>
 </li>
@@ -369,12 +369,12 @@
 <li><p>当并发数合理并且CPU拥有足够的处理能力句，并发会提高程序的运行效率。</p>
 </li>
 </ol>
-<h5 id="2-并行"><a href="#2-并行" class="headerlink" title="2. 并行"></a>2. 并行</h5><p>并行是指同时处理多任务的能力。目前， CPU 已经发展为多核，可以同时执行多个互不依赖的指令及执行块。</p>
-<h4 id="线程和进程"><a href="#线程和进程" class="headerlink" title="线程和进程"></a>线程和进程</h4><h5 id="1-进程"><a href="#1-进程" class="headerlink" title="1. 进程"></a>1. 进程</h5><p>进程（Process）是计算机中的程序关于某数据集合上的一次运行活动，是系统进行资源分配和调度的基本单位，是操作系统结构的基础。在早期面向进程设计的计算机结构中，进程是程序的基本执行实体；在当代面向线程设计的计算机结构中，进程是线程的容器。程序是指令、数据及其组织形式的描述，进程是程序的实体</p>
-<h5 id="2-线程"><a href="#2-线程" class="headerlink" title="2. 线程"></a>2. 线程</h5><p><strong>线程</strong>（英语：thread）是操作系统能够进行运算调度的最小单位。它被包含在进程之中，是进程中的实际运作单位。一条线程指的是进程中一个单一顺序的控制流，一个进程中可以并发多个线程，每条线程并行执行不同的任务。在Unix System V及SunOS中也被称为轻量进程（lightweight processes），但轻量进程更多指内核线程（kernel thread），而把用户线程（user thread）称为线程。</p>
+<h5 id="并行"><a href="#并行" class="headerlink" title="并行"></a>并行</h5><p>并行是指同时处理多任务的能力。目前， CPU 已经发展为多核，可以同时执行多个互不依赖的指令及执行块。</p>
+<h4 id="线程和进程"><a href="#线程和进程" class="headerlink" title="线程和进程"></a>线程和进程</h4><h5 id="进程"><a href="#进程" class="headerlink" title="进程"></a>进程</h5><p>进程（Process）是计算机中的程序关于某数据集合上的一次运行活动，是系统进行资源分配和调度的基本单位，是操作系统结构的基础。在早期面向进程设计的计算机结构中，进程是程序的基本执行实体；在当代面向线程设计的计算机结构中，进程是线程的容器。程序是指令、数据及其组织形式的描述，进程是程序的实体</p>
+<h5 id="线程"><a href="#线程" class="headerlink" title="线程"></a>线程</h5><p><strong>线程</strong>（英语：thread）是操作系统能够进行运算调度的最小单位。它被包含在进程之中，是进程中的实际运作单位。一条线程指的是进程中一个单一顺序的控制流，一个进程中可以并发多个线程，每条线程并行执行不同的任务。在Unix System V及SunOS中也被称为轻量进程（lightweight processes），但轻量进程更多指内核线程（kernel thread），而把用户线程（user thread）称为线程。</p>
 <p>例如，楼下有一车砖头需要工人搬到 21 楼，如果 10 个人一起搬，速度 定比1个人搬要快，完成任务的总时间会极大减少。但是论单次的时间成本，由于楼梯交会等因素 10 个人比 个人要慢。如果无限地增加入数，比如10000 人参与搬砖时，反而会因为楼道拥墙不堪变得更慢，所以合适的人数才会使工作效率最大化。同理，合适的线程数才能让 CPU 资源被充分利用</p>
 <p><img src="../images/image-20200605145830777.png" alt="image-20200605145830777"></p>
-<h5 id="3-线程的生命周期"><a href="#3-线程的生命周期" class="headerlink" title="3. 线程的生命周期"></a>3. 线程的生命周期</h5><p>线程的生命周期有 <strong><em>NEW（新建状态）、RUNNABLE （就绪状态）、 RUNNING （运行状态）、</em></strong></p>
+<h5 id="线程的生命周期"><a href="#线程的生命周期" class="headerlink" title="线程的生命周期"></a>线程的生命周期</h5><p>线程的生命周期有 <strong><em>NEW（新建状态）、RUNNABLE （就绪状态）、 RUNNING （运行状态）、</em></strong></p>
 <p><strong><em>BLOCKED （阻塞状态）、 DEAD （终止状态）</em></strong>五种状态。</p>
 <p>线程的状态流转图如下：</p>
 <p><img src="../images/1591345506326.jpg" alt="1591345506326.jpg"></p>
@@ -399,8 +399,65 @@
 </li>
 </ul>
 <ol start="5">
-<li><strong><em>即终止状态（DEAD ）</em></strong>：是 run() 执行结束，或同异常退出后的状态，此状态不可逆转。</li>
+<li><p><strong><em>即终止状态（DEAD ）</em></strong>：是 run() 执行结束，或同异常退出后的状态，此状态不可逆转。</p>
+<h4 id="线程池"><a href="#线程池" class="headerlink" title="线程池"></a>线程池</h4><h5 id="使用线程池的好处"><a href="#使用线程池的好处" class="headerlink" title="使用线程池的好处"></a>使用线程池的好处</h5><ol>
+<li>利用线程池管理并复用线程、控制最大并发数等。</li>
+<li>实现任务线程队列缓存策略和拒绝机制。</li>
+<li>实现某些与时间相关的功能，如定时执行、周期执行等。</li>
+<li>隔离线程环境。比如，交易服务和搜索服务在同一台服务器上，分别开启两个线程池，交易线程的资源消耗明显要大；因此，通过配置独立的线程池将较慢的交易服务与搜索服务隔离开，避免各服务线程相互影响。<h5 id="ThreadPoolExecutor"><a href="#ThreadPoolExecutor" class="headerlink" title="ThreadPoolExecutor"></a>ThreadPoolExecutor</h5></li>
 </ol>
+</li>
+</ol>
+<p>先来看看构造方法的参数</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">ThreadPoolExecutor</span><span class="params">(<span class="keyword">int</span> corePoolSize,</span></span></span><br><span class="line"><span class="function"><span class="params">                          <span class="keyword">int</span> maximumPoolSize,</span></span></span><br><span class="line"><span class="function"><span class="params">                          <span class="keyword">long</span> keepAliveTime,</span></span></span><br><span class="line"><span class="function"><span class="params">                          TimeUnit unit,</span></span></span><br><span class="line"><span class="function"><span class="params">                          BlockingQueue&lt;Runnable&gt; workQueue,</span></span></span><br><span class="line"><span class="function"><span class="params">                          ThreadFactory threadFactory,</span></span></span><br><span class="line"><span class="function"><span class="params">                          RejectedExecutionHandler handler)</span></span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>corePoolSize</p>
+<p> corePoolSize 表示常驻核心线程数。如果等于0 ，则任务执行完之后没有任何请求进入时销毁线程池的线程，如果大于0，即使本地任务执行完毕，核心线程也不会被销毁。这个值的设置非常关键，设置过大会浪费资源，设置过小会导致线程频繁地创建或销毁。</p>
+</li>
+<li><p>maximumPoolSize</p>
+<p>maximumPoolSize 表示线程池能够容纳同时执行的最大线程数。必须大于或等于1。如果待执行的线程数大于此值，需要借助第5个参数的帮助，缓存在队列中。如果 maximumPoolSize和corePoolSize相等，即是固定大小线程池。</p>
+</li>
+<li><p>keepAliveTime</p>
+<p>keepAliveTime表示线程池中的线程空闲时间，当空闲时间达keepAliveTime值时，线程会被销毁，直到只剩下corePoolSize个线程为止，避免浪费内存和旬柄资源。在默认情况下，当线程池的线程数大于corePoolSize 时，keepAliveTime才会起作 用。但是当ThreadPoolExecutor的allowCoreThreadTimeOut变量设置为 true 核心线程超时后也会被回收。</p>
+</li>
+<li><p>TimeUnit</p>
+<p> TimeUnit表示时间单位。 keepAliveTime 的时间单位通常是TimeUnit.SECONDS</p>
+</li>
+<li><p>workQueue</p>
+<p>workQueue表示缓存队列。当请求的线程数大于maximumPoolSize线程进入BlockingQueue 塞队列。后续示例代码申使用的 LinkedBlockingQueue 是单向链表，使用锁来控制入队和出队的原子性，两个锁分别控制元素的添加和获取，是一个生产消费模型队列。</p>
+</li>
+<li><p>threadFactory</p>
+<p>threadFactory表示线程工厂。它用来生产一组相同任务的结程。线程池的命名是通过给这个 factory 增加组名前缀来实现的。在虚拟机枝分析时，就可以知道线程任务是由哪个线程工厂产生的。</p>
+</li>
+<li><p>handler</p>
+<p>handler 表示执行拒绝策晤的对象。当超过第5个参数 workQueue的任务缓存区上限的时候，就可以通过该策略处理请求，这是种简单的限流保护。</p>
+</li>
+</ul>
+<h5 id="jdk提供的几种线程池"><a href="#jdk提供的几种线程池" class="headerlink" title="jdk提供的几种线程池"></a>jdk提供的几种线程池</h5><p>在java.util.concurrent.Executors包下提供了4中线程池</p>
+<ul>
+<li><p>newCachedThreadPool</p>
+<p>maximumPoolSize 最大可以至 Integer.MAX_VALUE, 是高度可伸缩的线程池 如果达到这个上限,相信没有任何服务器能够继续工作，肯定会抛出OOM异常。 keepAliveTime 默认为 60 秒，工作线程处于空闲状态则回收工作线程。如果任务数增加则再次创建出新线程处理任务。</p>
+</li>
+<li><p>newScheduledThreadPool</p>
+<p>maximumPoolSize 最大可以至 Integer.MAX_VALUE，存在OOM风险</p>
+</li>
+<li><p>newSingleThreadExecutor</p>
+<p>创建个单线程的线程池，相当于单线程串行执行所有任务 保证接任务的提交顺序依次执行。使用的LinkedBlockingQueue默认构造器，存在OOM风险。</p>
+</li>
+<li><p>newFixedThreadPool</p>
+<p>输入的参数即是固定线程数，既是核心线程数也是最大线程数，不存在空闲线程，所以 keepAlieTime 等于0，同样使用的LinkedBlockingQueue是默认构造器，存在OOM风险。</p>
+</li>
+<li><p>newWorkStealingPool</p>
+<p>JDK1.8引入，默认的并行度是cpu的核数。</p>
+</li>
+</ul>
+<h5 id="jdk提供的拒绝策略"><a href="#jdk提供的拒绝策略" class="headerlink" title="jdk提供的拒绝策略"></a>jdk提供的拒绝策略</h5><p>自定义拒绝策略实现RejectedExecutionHandler接口的rejectedExecution方法即可。</p>
+<ul>
+<li>AbortPolicy（默认）丢弃并抛出RejectedExecutionHandler异常</li>
+<li>DiscardPolicy 丢弃任务</li>
+<li>DiscardOldestPolicy 丢弃队列中最早插入的任务</li>
+<li>CallerRunsPolicy 直接执行任务的run方法</li>
+</ul>
 
       
     </div>
@@ -520,7 +577,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-count">8</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -592,7 +649,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#并发与并行"><span class="nav-number">1.</span> <span class="nav-text">并发与并行</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-并发"><span class="nav-number">1.1.</span> <span class="nav-text">1. 并发</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-并行"><span class="nav-number">1.2.</span> <span class="nav-text">2. 并行</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#线程和进程"><span class="nav-number">2.</span> <span class="nav-text">线程和进程</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-进程"><span class="nav-number">2.1.</span> <span class="nav-text">1. 进程</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-线程"><span class="nav-number">2.2.</span> <span class="nav-text">2. 线程</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-线程的生命周期"><span class="nav-number">2.3.</span> <span class="nav-text">3. 线程的生命周期</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#并发与并行"><span class="nav-number">1.</span> <span class="nav-text">并发与并行</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#并发"><span class="nav-number">1.1.</span> <span class="nav-text">并发</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#并行"><span class="nav-number">1.2.</span> <span class="nav-text">并行</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#线程和进程"><span class="nav-number">2.</span> <span class="nav-text">线程和进程</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#进程"><span class="nav-number">2.1.</span> <span class="nav-text">进程</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#线程"><span class="nav-number">2.2.</span> <span class="nav-text">线程</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#线程的生命周期"><span class="nav-number">2.3.</span> <span class="nav-text">线程的生命周期</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#线程池"><span class="nav-number">3.</span> <span class="nav-text">线程池</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#使用线程池的好处"><span class="nav-number">3.1.</span> <span class="nav-text">使用线程池的好处</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#ThreadPoolExecutor"><span class="nav-number">3.2.</span> <span class="nav-text">ThreadPoolExecutor</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#jdk提供的几种线程池"><span class="nav-number">3.3.</span> <span class="nav-text">jdk提供的几种线程池</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#jdk提供的拒绝策略"><span class="nav-number">3.4.</span> <span class="nav-text">jdk提供的拒绝策略</span></a></li></ol></li></ol></div>
             
 
           </div>
