@@ -83,16 +83,18 @@
 
 
 
-<meta name="description" content="选择比努力重要">
+<meta name="description" content="ZooKeeper是什么Apache ZooKeeper是由集群（节点组）使用的一种服务，用于在自身之间协调，并通过稳健的同步技术维护共享数据。ZooKeeper本身是一个分布式应用程序，为写入分布式应用程序提供服务。 ZooKeeper提供的常见服务如下 :  命名服务 - 按名称标识集群中的节点。它类似于DNS，但仅对于节点。 配置管理 - 加入节点的最近的和最新的系统配置信息。 集群管理 -">
 <meta property="og:type" content="article">
 <meta property="og:title" content="ZooKeeper">
 <meta property="og:url" content="http://yoursite.com/2020/07/21/ZooKeeper/index.html">
 <meta property="og:site_name" content="squanche&#39;s Blog">
-<meta property="og:description" content="选择比努力重要">
+<meta property="og:description" content="ZooKeeper是什么Apache ZooKeeper是由集群（节点组）使用的一种服务，用于在自身之间协调，并通过稳健的同步技术维护共享数据。ZooKeeper本身是一个分布式应用程序，为写入分布式应用程序提供服务。 ZooKeeper提供的常见服务如下 :  命名服务 - 按名称标识集群中的节点。它类似于DNS，但仅对于节点。 配置管理 - 加入节点的最近的和最新的系统配置信息。 集群管理 -">
+<meta property="og:image" content="http://yoursite.com/2020/07/21/images/timg.jpg">
 <meta property="article:published_time" content="2020-07-21T13:20:57.000Z">
-<meta property="article:modified_time" content="2020-07-21T13:20:57.262Z">
+<meta property="article:modified_time" content="2020-07-23T09:39:25.081Z">
 <meta property="article:author" content="squanche">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/2020/07/21/images/timg.jpg">
 
 
 
@@ -332,7 +334,146 @@
       
 
       
-        
+        <h4 id="ZooKeeper是什么"><a href="#ZooKeeper是什么" class="headerlink" title="ZooKeeper是什么"></a>ZooKeeper是什么</h4><p>Apache ZooKeeper是由集群（节点组）使用的一种服务，用于在自身之间协调，并通过稳健的同步技术维护共享数据。ZooKeeper本身是一个分布式应用程序，为写入分布式应用程序提供服务。</p>
+<p>ZooKeeper提供的常见服务如下 :</p>
+<ul>
+<li><strong>命名服务</strong> - 按名称标识集群中的节点。它类似于DNS，但仅对于节点。</li>
+<li><strong>配置管理</strong> - 加入节点的最近的和最新的系统配置信息。</li>
+<li><strong>集群管理</strong> - 实时地在集群和节点状态中加入/离开节点。</li>
+<li><strong>选举算法</strong> - 选举一个节点作为协调目的的leader。</li>
+<li><strong>锁定和同步服务</strong> - 在修改数据的同时锁定数据。此机制可帮助你在连接其他分布式应用程序（如Apache HBase）时进行自动故障恢复。</li>
+<li><strong>高度可靠的数据注册表</strong> - 即使在一个或几个节点关闭时也可以获得数据。</li>
+</ul>
+<p>分布式应用程序提供了很多好处，但它们也抛出了一些复杂和难以解决的挑战。ZooKeeper框架提供了一个完整的机制来克服所有的挑战。竞争条件和死锁使用<strong>故障安全同步方法</strong>进行处理。另一个主要缺点是数据的不一致性，ZooKeeper使用<strong>原子性</strong>解析。</p>
+<p>以下是使用ZooKeeper的好处：</p>
+<ul>
+<li><strong>简单的分布式协调过程</strong></li>
+<li><strong>同步</strong> - 服务器进程之间的相互排斥和协作。此过程有助于Apache HBase进行配置管理。</li>
+<li><strong>有序的消息</strong></li>
+<li><strong>序列化</strong> - 根据特定规则对数据进行编码。确保应用程序运行一致。这种方法可以在MapReduce中用来协调队列以执行运行的线程。</li>
+<li><strong>可靠性</strong></li>
+<li><strong>原子性</strong> - 数据转移完全成功或完全失败，但没有事务是部分的。</li>
+</ul>
+<h4 id="ZooKeeper的CAP定理"><a href="#ZooKeeper的CAP定理" class="headerlink" title="ZooKeeper的CAP定理"></a><strong>ZooKeeper的CAP定理</strong></h4><p>既一致性（Consistency）、分区容错性（Partition tolerance），因为集群少于半数的节点无法对外提供服务，因此不符合可用性（Availability）。</p>
+<h4 id="ZooKeeper服务器的角色"><a href="#ZooKeeper服务器的角色" class="headerlink" title="ZooKeeper服务器的角色"></a>ZooKeeper服务器的角色</h4><table>
+<thead>
+<tr>
+<th>角色</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Client（客户端）</td>
+<td>客户端，我们的分布式应用集群中的一个节点，从服务器访问信息。对于特定的时间间隔，每个客户端向服务器发送消息以使服务器知道客户端是活跃的。类似地，当客户端连接时，服务器发送确认码。如果连接的服务器没有响应，客户端会自动将消息重定向到另一个服务器</td>
+</tr>
+<tr>
+<td>Server（服务器）</td>
+<td>服务器，我们的ZooKeeper总体中的一个节点，为客户端提供所有的服务。向客户端发送确认码以告知服务器是活跃的。</td>
+</tr>
+<tr>
+<td>Ensemble</td>
+<td>ZooKeeper服务器组。形成ensemble所需的<strong>最小节点数为3</strong>。</td>
+</tr>
+<tr>
+<td>Follower</td>
+<td>跟随leader指令的服务器节点。主要负责处理<br />1.处理客户端非事务性请求，转发事务请求给Leader服务器（事务请求都由Leader处理） <br/>2.参与事务请求Proposal的投票 <br/>3.参与Leader选举投票</td>
+</tr>
+<tr>
+<td>Leader</td>
+<td>服务器节点，如果任何连接的节点失败，则执行自动恢复。Leader在服务启动时被选举。主要负责处理<br />1.事务请求的唯一调度者和处理者，保证集群事务处理的顺序性。 <br/>2.集群内部各个服务器的调度者</td>
+</tr>
+<tr>
+<td>Observer</td>
+<td>观察zk集群的最新状态变化并将这些状态同步过来，对于非事务请求可以进行独立的处理，对于事务请求，则会转发给Leader服务器进行处理，<strong>Observer不会参与任何形式的投票</strong>，包括事务请求Proposal的投票和Leader选举的投票</td>
+</tr>
+</tbody>
+</table>
+<h4 id="ZooKeeper的元数据结构"><a href="#ZooKeeper的元数据结构" class="headerlink" title="ZooKeeper的元数据结构"></a>ZooKeeper的元数据结构</h4><p>类似于文件系统，每一个节点Znode。和文件系统一样，我们能够自由的增加、删除Znode，在一个Znode下增加、删除子Znode，唯一的不同在于Znode是可以存储数据的。</p>
+<p><img src="../images/timg.jpg" alt=""></p>
+<p><strong>为了保证事务的顺序一致性</strong>，zookeeper采用了递增的事务id号（zxid）来标识事务。所有的提议（proposal）都在被提出的时候加上了zxid。实现中zxid是一个<strong>64位的数字</strong>，<strong>它高32位是epoch</strong>用来标识leader关系是否改变，每次一个leader被选出来，它都会有一个新的epoch，标识当前属于那个leader的统治时期。<strong>低32位用于递增计数</strong></p>
+<p>ZooKeeper数据模型中的每个Znode都维护着一个 <strong>Stat</strong> 结构。一个stat仅提供一个Znode的<strong>元数据</strong>。它由版本号，操作控制列表(ACL)，<strong>时间戳</strong>和<strong>数据长度</strong>组成。</p>
+<ul>
+<li><strong>版本号</strong> 每个znode都有版本号，这意味着每当与znode相关联的数据发生变化时，其对应的版本号也会增加。当多个zookeeper客户端尝试在同一znode上执行操作时，版本号的使用就很重要。</li>
+<li><strong>操作控制列表(ACL)</strong> - ACL基本上是访问znode的认证机制。它管理所有znode读取和写入操作。</li>
+<li><strong>时间戳</strong> - 时间戳表示创建和修改znode所经过的时间。它通常以毫秒为单位。ZooKeeper从“事务ID”(zxid)标识znode的每个更改。<strong>Zxid</strong> 是唯一的，并且为每个事务保留时间，以便你可以轻松地确定从一个请求到另一个请求所经过的时间。</li>
+<li><strong>数据长度</strong> - 存储在znode中的数据总量是数据长度。你最多可以存储1MB的数据。</li>
+</ul>
+<p>Stat包含的属性</p>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>czxid</td>
+<td>创建Znode节点时的zxid</td>
+</tr>
+<tr>
+<td>mzxid</td>
+<td>节点被修改时最新的zxid</td>
+</tr>
+<tr>
+<td>pzxid</td>
+<td>最新修改的zxid</td>
+</tr>
+<tr>
+<td>ctime</td>
+<td>创建Znode节点的时间戳</td>
+</tr>
+<tr>
+<td>mtime</td>
+<td>修改Znode节点的时间戳</td>
+</tr>
+<tr>
+<td>version</td>
+<td>*当前节点版本号（可以理解为修改次数，每修改一次值+1）</td>
+</tr>
+<tr>
+<td>cversion</td>
+<td>子节点版本号（子节点修改次数，每修改一次值+1）</td>
+</tr>
+<tr>
+<td>aversion</td>
+<td>当前节点acl版本号（acl节点被修改次数，每修改一次值+1）</td>
+</tr>
+<tr>
+<td>ephemeralOwner</td>
+<td>临时节点标示，当前节点如果是临时节点，则存储的创建者的会话id（sessionId），如果不是，那么值=0</td>
+</tr>
+<tr>
+<td>dataLength</td>
+<td>当前节点数据长度</td>
+</tr>
+<tr>
+<td>numChildren</td>
+<td>当前节点子节点个数</td>
+</tr>
+</tbody>
+</table>
+<p>Znode的类型：</p>
+<p>Znode被分为持久（persistent）节点，顺序（sequential）节点和临时（ephemeral）节点。</p>
+<ul>
+<li><strong>持久节点</strong> - 即使在创建该特定znode的客户端断开连接后，持久节点仍然存在。默认情况下，除非另有说明，否则所有znode都是持久的。</li>
+<li><strong>临时节点</strong> - 客户端活跃时，临时节点就是有效的。当客户端与ZooKeeper集合断开连接时，临时节点会自动删除。因此，只有临时节点不允许有子节点。如果临时节点被删除，则下一个合适的节点将填充其位置。临时节点在leader选举中起着重要作用。</li>
+<li><strong>顺序节点</strong> - 顺序节点可以是持久的或临时的。当一个新的znode被创建为一个顺序节点时，ZooKeeper通过将10位的序列号附加到原始名称来设置znode的路径。例如，如果将具有路径 <strong>/myapp</strong> 的znode创建为顺序节点，则ZooKeeper会将路径更改为 <strong>/myapp0000000001</strong> ，并将下一个序列号设置为0000000002。如果两个顺序节点是同时创建的，那么ZooKeeper不会对每个znode使用相同的数字。顺序节点在锁定和同步中起重要作用。</li>
+</ul>
+<h4 id="ZooKeeper内部Leader选举"><a href="#ZooKeeper内部Leader选举" class="headerlink" title="ZooKeeper内部Leader选举"></a>ZooKeeper内部Leader选举</h4><h4 id="基于ZooKeeper的选举流程"><a href="#基于ZooKeeper的选举流程" class="headerlink" title="基于ZooKeeper的选举流程"></a>基于ZooKeeper的选举流程</h4><p>让我们分析如何在ZooKeeper集合中选举leader节点。考虑一个集群中有N个节点。leader选举的过程如下：</p>
+<ul>
+<li>所有节点创建具有相同路径 /app/leader_election/guid_ 的顺序、临时节点。</li>
+<li>ZooKeeper集合将附加10位序列号到路径，创建的znode将是 /app/leader_election/guid_0000000001，/app/leader_election/guid_0000000002等。</li>
+<li>对于给定的实例，在znode中创建最小数字的节点成为leader，而所有其他节点是follower。</li>
+<li>每个follower节点监视下一个具有最小数字的znode。例如，创建znode/app/leader_election/guid_0000000008的节点将监视znode/app/leader_election/guid_0000000007，创建znode/app/leader_election/guid_0000000007的节点将监视znode/app/leader_election/guid_0000000006。</li>
+<li>如果leader关闭，则其相应的znode/app/leader_electionN会被删除。</li>
+<li>下一个在线follower节点将通过监视器获得关于leader移除的通知。</li>
+<li>下一个在线follower节点将检查是否存在其他具有最小数字的znode。如果没有，那么它将承担leader的角色。否则，它找到的创建具有最小数字的znode的节点将作为leader。</li>
+<li>类似地，所有其他follower节点选举创建具有最小数字的znode的节点作为leader。</li>
+</ul>
+<p>leader选举是一个复杂的过程，但ZooKeeper服务使它非常简单。让我们在下一章中继续学习ZooKeeper安装，以用于开发目的。</p>
+<h4 id="基于ZooKeeper实现分布式的公平可重入互斥锁"><a href="#基于ZooKeeper实现分布式的公平可重入互斥锁" class="headerlink" title="基于ZooKeeper实现分布式的公平可重入互斥锁"></a>基于ZooKeeper实现分布式的公平可重入互斥锁</h4>
       
     </div>
     
@@ -416,8 +557,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -494,6 +644,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#ZooKeeper是什么"><span class="nav-number">1.</span> <span class="nav-text">ZooKeeper是什么</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ZooKeeper的CAP定理"><span class="nav-number">2.</span> <span class="nav-text">ZooKeeper的CAP定理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ZooKeeper服务器的角色"><span class="nav-number">3.</span> <span class="nav-text">ZooKeeper服务器的角色</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ZooKeeper的元数据结构"><span class="nav-number">4.</span> <span class="nav-text">ZooKeeper的元数据结构</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ZooKeeper内部Leader选举"><span class="nav-number">5.</span> <span class="nav-text">ZooKeeper内部Leader选举</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#基于ZooKeeper的选举流程"><span class="nav-number">6.</span> <span class="nav-text">基于ZooKeeper的选举流程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#基于ZooKeeper实现分布式的公平可重入互斥锁"><span class="nav-number">7.</span> <span class="nav-text">基于ZooKeeper实现分布式的公平可重入互斥锁</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
