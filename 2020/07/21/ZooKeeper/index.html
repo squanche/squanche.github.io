@@ -91,7 +91,7 @@
 <meta property="og:description" content="ZooKeeper是什么Apache ZooKeeper是由集群（节点组）使用的一种服务，用于在自身之间协调，并通过稳健的同步技术维护共享数据。ZooKeeper本身是一个分布式应用程序，为写入分布式应用程序提供服务。 ZooKeeper提供的常见服务如下 :  命名服务 - 按名称标识集群中的节点。它类似于DNS，但仅对于节点。 配置管理 - 加入节点的最近的和最新的系统配置信息。 集群管理 -">
 <meta property="og:image" content="http://yoursite.com/2020/07/21/images/timg.jpg">
 <meta property="article:published_time" content="2020-07-21T13:20:57.000Z">
-<meta property="article:modified_time" content="2020-07-23T09:39:25.081Z">
+<meta property="article:modified_time" content="2020-07-26T03:45:02.976Z">
 <meta property="article:author" content="squanche">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://yoursite.com/2020/07/21/images/timg.jpg">
@@ -461,7 +461,49 @@
 <li><strong>临时节点</strong> - 客户端活跃时，临时节点就是有效的。当客户端与ZooKeeper集合断开连接时，临时节点会自动删除。因此，只有临时节点不允许有子节点。如果临时节点被删除，则下一个合适的节点将填充其位置。临时节点在leader选举中起着重要作用。</li>
 <li><strong>顺序节点</strong> - 顺序节点可以是持久的或临时的。当一个新的znode被创建为一个顺序节点时，ZooKeeper通过将10位的序列号附加到原始名称来设置znode的路径。例如，如果将具有路径 <strong>/myapp</strong> 的znode创建为顺序节点，则ZooKeeper会将路径更改为 <strong>/myapp0000000001</strong> ，并将下一个序列号设置为0000000002。如果两个顺序节点是同时创建的，那么ZooKeeper不会对每个znode使用相同的数字。顺序节点在锁定和同步中起重要作用。</li>
 </ul>
-<h4 id="ZooKeeper内部Leader选举"><a href="#ZooKeeper内部Leader选举" class="headerlink" title="ZooKeeper内部Leader选举"></a>ZooKeeper内部Leader选举</h4><h4 id="基于ZooKeeper的选举流程"><a href="#基于ZooKeeper的选举流程" class="headerlink" title="基于ZooKeeper的选举流程"></a>基于ZooKeeper的选举流程</h4><p>让我们分析如何在ZooKeeper集合中选举leader节点。考虑一个集群中有N个节点。leader选举的过程如下：</p>
+<h4 id="ZooKeeper的ZAB协议"><a href="#ZooKeeper的ZAB协议" class="headerlink" title="ZooKeeper的ZAB协议"></a>ZooKeeper的ZAB协议</h4><p>ZAB(Zookeeper Atomic Broadcast) 协议是为分布式协调服务 ZooKeeper 专门设计的一种支持崩溃恢复的原子广播协议。在 ZooKeeper 中，<strong>主要依赖 ZAB 协议来实现分布式数据一致性</strong>，基于该协议ZooKeeper 实现了一种主备模式的系统架构来保持集群中各个副本之间的数据一致性。</p>
+<p>ZAB协议整体可划分为两个基本的模式：<strong>消息广播和崩溃恢复</strong></p>
+<p>按协议原理可细分为四个阶段：<strong>选举（Leader Election）、发现（Discovery）、同步（Synchronization）和广播(Broadcast)</strong></p>
+<p>按协议实现分为三个时期：<strong>选举（Fast Leader Election）、恢复(Recovery Phase)和广播(Broadcast Phase)</strong></p>
+<ul>
+<li>消息广播</li>
+</ul>
+<ol>
+<li><p>leader 接收到消息请求后，将消息赋予一个全局唯一的64 位自增 id（叫:zxid），通过 zxid 的大小比较既可以实现因果有序这个特征。</p>
+</li>
+<li><p>leader 为每个 follower 准备了一个 FIFO 队列(通过 TCP协议来实现，以实现了全局有序这一个特点)将带有 zxid的消息作为一个提案(proposal)分发给所有的 follower。</p>
+</li>
+<li><p>当 follower 接收到 proposal，先把 proposal 写到磁盘，写入成功以后再向 leader 回复一个 ack。</p>
+</li>
+<li><p>当 leader 接收到合法数量(超过半数节点)的 ACK 后，leader 就会向这些 follower 发送 commit 命令，同时会在本地执行该消息。</p>
+</li>
+<li><p>当 follower 收到消息的 commit 命令以后会提交该消息。</p>
+</li>
+</ol>
+<ul>
+<li>崩溃恢复</li>
+</ul>
+<p>在正常运行情况下运行非常良好，但是一旦Leader服务器出现崩溃或者由于网络原因导致Leader服务器失去了与过半Follower的联系，那么就会进入崩溃恢复模式。在ZAB协议中，为了保证程序的正确运行，整个恢复过程结束后需要选举出一个新的Leader。服务器崩溃恢复主要包括Leader选举和数据恢复两部分</p>
+<p><strong>FastLeaderElection原理</strong></p>
+<p><strong>Zab的选票数据结构</strong></p>
+<ul>
+<li><p><strong>logicClock</strong> 表示这是该服务器发起的第多少轮投票，从1开始计数</p>
+</li>
+<li><p><strong>state</strong> 当前服务器的状态</p>
+</li>
+<li><p><strong>-self_id</strong> 当前服务器的<strong>唯一ID</strong></p>
+</li>
+<li><p><strong>self_zxid</strong> 当前服务器上所保存的数据的<strong>最大事务ID</strong>，从0开始计数</p>
+</li>
+<li><p><strong>vote_id</strong> 被推举的服务器的<strong>唯一ID</strong></p>
+</li>
+<li><p><strong>vote_zxid</strong> 被推举的服务器上所保存的数据的<strong>最大事务ID</strong>，从0开始计数</p>
+</li>
+</ul>
+<p>ZooKeeper规定所有有效的投票都必须在同一轮次中。每个服务器在开始新一轮投票时，会先对自己维护的logicClock进行自增操作。</p>
+<p>每个服务器在广播自己的选票前，会将自己的投票箱清空。该投票箱记录了所收到的选票。例：服务器2投票给服务器3，服务器3投票给服务器1，则服务器1的投票箱为(2, 3), (3, 1), (1, 1)。<strong>票箱中只会记录每一投票者的最后一票</strong>，如投票者更新自己的选票，则其它服务器收到该新选票后会在自己票箱中更新该服务器的选票。</p>
+<p><strong>每个服务器最开始都是通过广播把票投给自己</strong>。服务器会尝试从其它服务器获取投票，并记入自己的投票箱内。如果无法获取任何外部投票，则会确认自己是否与集群中其它服务器保持着有效连接。如果是，则再次发送自己的投票；如果否，则马上与之建立连接。根据选票<strong>logicClock -&gt; vote_zxid -&gt; vote_id依次判断</strong></p>
+<h4 id="基于ZooKeeper的选举流程"><a href="#基于ZooKeeper的选举流程" class="headerlink" title="基于ZooKeeper的选举流程"></a>基于ZooKeeper的选举流程</h4><p>让我们分析如何在ZooKeeper集合中选举leader节点。考虑一个集群中有N个节点。leader选举的过程如下：</p>
 <ul>
 <li>所有节点创建具有相同路径 /app/leader_election/guid_ 的顺序、临时节点。</li>
 <li>ZooKeeper集合将附加10位序列号到路径，创建的znode将是 /app/leader_election/guid_0000000001，/app/leader_election/guid_0000000002等。</li>
@@ -473,7 +515,18 @@
 <li>类似地，所有其他follower节点选举创建具有最小数字的znode的节点作为leader。</li>
 </ul>
 <p>leader选举是一个复杂的过程，但ZooKeeper服务使它非常简单。让我们在下一章中继续学习ZooKeeper安装，以用于开发目的。</p>
-<h4 id="基于ZooKeeper实现分布式的公平可重入互斥锁"><a href="#基于ZooKeeper实现分布式的公平可重入互斥锁" class="headerlink" title="基于ZooKeeper实现分布式的公平可重入互斥锁"></a>基于ZooKeeper实现分布式的公平可重入互斥锁</h4>
+<h4 id="基于ZooKeeper实现分布式的公平可重入互斥锁"><a href="#基于ZooKeeper实现分布式的公平可重入互斥锁" class="headerlink" title="基于ZooKeeper实现分布式的公平可重入互斥锁"></a>基于ZooKeeper实现分布式的公平可重入互斥锁</h4><p>curator有提供</p>
+<h4 id="ZooKeeper如何处理脑裂问题的"><a href="#ZooKeeper如何处理脑裂问题的" class="headerlink" title="ZooKeeper如何处理脑裂问题的"></a>ZooKeeper如何处理脑裂问题的</h4><p>要解决Split-Brain的问题</p>
+<ul>
+<li><p>Quorums（ˈkwôrəm 法定人数） ，比如3个节点的集群，Quorums = 2, 也就是说集群可以容忍1个节点失效，这时候还能选举出1个lead，集群还可用。比如4个节点的集群，它的Quorums = 3，Quorums要超过3，相当于集群的容忍度还是1，如果2个节点失效，那么整个集群还是无效的采用Redundant communications，冗余通信的方式，集群中采用多种通信方式，防止一种通信方式失效导致集群中的节点无法通信。</p>
+</li>
+<li><p>Fencing, 共享资源的方式，比如能看到共享资源就表示在集群中，能够获得共享资源的锁的就是Leader，看不到共享资源的，就不在集群中。</p>
+</li>
+</ul>
+<p>  ZooKeeper默认采用了Quorums这种方式，即只有集群中超过半数节点投票才能选举出Leader。这样的方式可以确保leader的唯一性,要么选出唯一的一个leader,要么选举失败。在ZooKeeper中Quorums有2个作用：</p>
+<p>  集群中最少的节点数用来选举Leader保证集群可用<br>  通知客户端数据已经安全保存前集群中最少数量的节点数已经保存了该数据。一旦这些节点保存了该数据，客户端将被通知已经安全保存了，可以继续其他任务。而集群中剩余的节点将会最终也保存了该数据</p>
+<p>  假设某个leader假死，其余的followers选举出了一个新的leader。这时，旧的leader复活并且仍然认为自己是leader，这个时候它向其他followers发出写请求也是会被拒绝的。因为每当新leader产生时，会生成一个epoch，这个epoch是递增的，followers如果确认了新的leader存在，知道其epoch，就会拒绝epoch小于现任leader epoch的所有请求。那有没有follower不知道新的leader存在呢，有可能，但肯定不是大多数，否则新leader无法产生。Zookeeper的写也遵循quorum机制，因此，得不到大多数支持的写是无效的，旧leader即使各种认为自己是leader，依然没有什么作用。</p>
+
       
     </div>
     
@@ -654,7 +707,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#ZooKeeper是什么"><span class="nav-number">1.</span> <span class="nav-text">ZooKeeper是什么</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ZooKeeper的CAP定理"><span class="nav-number">2.</span> <span class="nav-text">ZooKeeper的CAP定理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ZooKeeper服务器的角色"><span class="nav-number">3.</span> <span class="nav-text">ZooKeeper服务器的角色</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ZooKeeper的元数据结构"><span class="nav-number">4.</span> <span class="nav-text">ZooKeeper的元数据结构</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ZooKeeper内部Leader选举"><span class="nav-number">5.</span> <span class="nav-text">ZooKeeper内部Leader选举</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#基于ZooKeeper的选举流程"><span class="nav-number">6.</span> <span class="nav-text">基于ZooKeeper的选举流程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#基于ZooKeeper实现分布式的公平可重入互斥锁"><span class="nav-number">7.</span> <span class="nav-text">基于ZooKeeper实现分布式的公平可重入互斥锁</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#ZooKeeper是什么"><span class="nav-number">1.</span> <span class="nav-text">ZooKeeper是什么</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ZooKeeper的CAP定理"><span class="nav-number">2.</span> <span class="nav-text">ZooKeeper的CAP定理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ZooKeeper服务器的角色"><span class="nav-number">3.</span> <span class="nav-text">ZooKeeper服务器的角色</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ZooKeeper的元数据结构"><span class="nav-number">4.</span> <span class="nav-text">ZooKeeper的元数据结构</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ZooKeeper的ZAB协议"><span class="nav-number">5.</span> <span class="nav-text">ZooKeeper的ZAB协议</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#基于ZooKeeper的选举流程"><span class="nav-number">6.</span> <span class="nav-text">基于ZooKeeper的选举流程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#基于ZooKeeper实现分布式的公平可重入互斥锁"><span class="nav-number">7.</span> <span class="nav-text">基于ZooKeeper实现分布式的公平可重入互斥锁</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ZooKeeper如何处理脑裂问题的"><span class="nav-number">8.</span> <span class="nav-text">ZooKeeper如何处理脑裂问题的</span></a></li></ol></div>
             
 
           </div>
